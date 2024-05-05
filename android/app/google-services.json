@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "858429484064",
+    "project_id": "votetest-8a598",
+    "storage_bucket": "votetest-8a598.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:858429484064:android:6d99b2ae4b2e01900da045",
+        "android_client_info": {
+          "package_name": "com.example.votivate"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCnfp14V-G531Asefsp06VGhJpteSExDkE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
