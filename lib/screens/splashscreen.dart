@@ -64,11 +64,10 @@ class _SplashScreenState extends State<SplashScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             // Your splash screen logo or image goes here
-            Lottie.asset(
-              'assets/anim/votivate_anim.json',
-              width: 350,
-              height: 500,
-              fit: BoxFit.fill,
+            Image.asset(
+              'assets/icons/votivate.png',
+              width: 250,
+              height: 400,
             ),
 
             Padding(
