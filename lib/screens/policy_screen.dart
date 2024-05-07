@@ -43,7 +43,7 @@ class PolicyScreen extends StatelessWidget {
               ],
             ),
 
-            const SizedBox(height: 50.0),
+            const SizedBox(height: 20.0),
             const Divider(height: 1, thickness: 1, color: Color(0xFF00b4d8)),
             const SizedBox(height: 20.0),
 

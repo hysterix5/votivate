@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:votivate/login.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 
@@ -57,15 +58,21 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             // Your splash screen logo or image goes here
-            Image.asset('assets/icons/votivate.png', height: 200),
+            Lottie.asset(
+              'assets/anim/votivate_anim.json',
+              width: 350,
+              height: 500,
+              fit: BoxFit.fill,
+            ),
 
             Padding(
-              padding: const EdgeInsets.only(top: 200),
+              padding: const EdgeInsets.only(top: 50),
               child: Column(
                 children: [
                   const Text("Developed by:"),

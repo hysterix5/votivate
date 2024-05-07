@@ -57,6 +57,7 @@ dependencies:
   permission_handler: ^11.3.1
   open_file: ^3.3.2
   cool_alert: ^2.0.1
+  lottie: ^2.7.0
   
  
 
@@ -105,6 +106,12 @@ flutter:
      - assets/icons/katribo.png
      - assets/icons/osa.png
      - assets/icons/votivate2.png
+     - assets/img/kuya.png
+     - assets/img/riza.png
+     - assets/img/reponte.png
+     - assets/img/seph.png
+     - assets/anim/votivate_anim.json
+     
     
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
