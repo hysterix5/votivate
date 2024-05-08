@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart' hide Border;
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:votivate/styles/styles.dart';
 
 class SuperAdminPage extends StatefulWidget {
   final DocumentSnapshot optionData;
@@ -105,26 +106,31 @@ class _SuperAdminPageState extends State<SuperAdminPage> {
                     ),
                     const SizedBox(height: 20),
                     const Text('Participants:'),
-                    ...participantNames.map((name) {
+                    // Display participant details
+                    ...participants!.map((participant) {
+                      String name = participant['name'];
+                      String program = participant['program'];
                       return ListTile(
-                        title: Text(
-                          name,
-                          style: const TextStyle(color: Colors.black),
+                        title: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              name,
+                              style: const TextStyle(
+                                color: Colors.black,
+                              ),
+                            ),
+                            const SizedBox(height: 3),
+                            Text(
+                              program,
+                              style: const TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ],
                         ),
                       );
                     }),
-                    // ElevatedButton(
-                    //   onPressed: () {
-                    //     exportToExcel(participantNames
-                    //         .map((name) => {
-                    //               "poll_question": "Participants",
-                    //               "option": name,
-                    //               "vote_count": 0
-                    //             })
-                    //         .toList());
-                    //   },
-                    //   child: const Text('Export to Excel'),
-                    // ),
                   ],
                 ),
               ),
@@ -238,7 +244,8 @@ class _SuperAdminPageState extends State<SuperAdminPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Admin", style: TextStyle(color: Colors.white)),
+        title: const Text("Election History",
+            style: TextStyle(color: Colors.white)),
         backgroundColor: const Color.fromARGB(255, 2, 136, 7),
         iconTheme: const IconThemeData(color: Colors.white),
         actions: [
@@ -297,173 +304,174 @@ class _SuperAdminPageState extends State<SuperAdminPage> {
                                 ...List.generate(options.length, (index) {
                                   final dataoption = options[index];
                                   return Container(
-                                      margin: const EdgeInsets.only(bottom: 5),
-                                      child: Row(
-                                        children: [
-                                          Expanded(
-                                            child: Stack(
-                                              children: [
-                                                Container(
-                                                  height:
-                                                      60, // Adjust the overall height of the container
-                                                  decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            8), // Add border radius for a more polished look
-                                                    color: const Color.fromARGB(
-                                                        255,
-                                                        240,
-                                                        240,
-                                                        240), // Background color for the container
-                                                  ),
-                                                  padding: const EdgeInsets
-                                                      .symmetric(
-                                                      horizontal: 10),
-                                                  child: Row(
-                                                    children: [
-                                                      GestureDetector(
-                                                        onTap: () {
-                                                          if (dataoption[
-                                                                  'image'] !=
-                                                              null) {
-                                                            // Show full-size image in a dialog
-                                                            showDialog(
-                                                              context: context,
-                                                              builder:
-                                                                  (BuildContext
-                                                                      context) {
-                                                                return Dialog(
+                                    margin: const EdgeInsets.only(bottom: 5),
+                                    child: Row(
+                                      children: [
+                                        Expanded(
+                                          child: Stack(
+                                            children: [
+                                              Container(
+                                                height: 60,
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 10),
+                                                child: Row(
+                                                  children: [
+                                                    GestureDetector(
+                                                      onTap: () {
+                                                        if (dataoption[
+                                                                'image'] !=
+                                                            null) {
+                                                          // Show full-size image in a dialog
+                                                          showDialog(
+                                                            context: context,
+                                                            builder:
+                                                                (BuildContext
+                                                                    context) {
+                                                              return Dialog(
+                                                                child: SizedBox(
+                                                                  height:
+                                                                      300, // Adjust the height as per your requirement
                                                                   child:
-                                                                      SizedBox(
-                                                                    height:
-                                                                        300, // Adjust the height as per your requirement
-                                                                    child:
-                                                                        Container(
-                                                                      width: double
-                                                                          .infinity,
-                                                                      decoration:
-                                                                          BoxDecoration(
-                                                                        image:
-                                                                            DecorationImage(
-                                                                          image:
-                                                                              NetworkImage(dataoption['image']),
-                                                                          fit: BoxFit
-                                                                              .cover,
-                                                                        ),
+                                                                      Container(
+                                                                    width: double
+                                                                        .infinity,
+                                                                    decoration:
+                                                                        BoxDecoration(
+                                                                      image:
+                                                                          DecorationImage(
+                                                                        image: NetworkImage(
+                                                                            dataoption['image']),
+                                                                        fit: BoxFit
+                                                                            .cover,
                                                                       ),
                                                                     ),
                                                                   ),
-                                                                );
-                                                              },
-                                                            );
-                                                          } else {
-                                                            // Show dialog with message
-                                                            showDialog(
-                                                              context: context,
-                                                              builder:
-                                                                  (BuildContext
-                                                                      context) {
-                                                                return AlertDialog(
-                                                                  title: const Text(
-                                                                      'Image Not Available'),
-                                                                  content:
-                                                                      const Text(
-                                                                          'Sorry, the image is not available.'),
-                                                                  actions: <Widget>[
-                                                                    ElevatedButton(
-                                                                      onPressed:
-                                                                          () {
-                                                                        Navigator.of(context)
-                                                                            .pop();
-                                                                      },
-                                                                      child: const Text(
-                                                                          'OK'),
-                                                                    ),
-                                                                  ],
-                                                                );
-                                                              },
-                                                            );
-                                                          }
-                                                        },
-                                                        child: CircleAvatar(
-                                                          radius: 25,
-                                                          backgroundColor:
-                                                              Colors
-                                                                  .transparent,
-                                                          child: dataoption[
-                                                                      'image'] !=
-                                                                  null
-                                                              ? ClipOval(
-                                                                  child: Image
-                                                                      .network(
-                                                                    dataoption[
-                                                                        'image'],
-                                                                    fit: BoxFit
-                                                                        .cover, // Use BoxFit.cover to fully cover the circle
-                                                                    width: double
-                                                                        .infinity,
-                                                                    height: double
-                                                                        .infinity,
-                                                                  ),
-                                                                )
-                                                              : const Icon(
-                                                                  Icons.person,
-                                                                  size: 40,
-                                                                  color: Colors
-                                                                      .grey,
                                                                 ),
-                                                        ),
+                                                              );
+                                                            },
+                                                          );
+                                                        } else {
+                                                          // Show dialog with message
+                                                          showDialog(
+                                                            context: context,
+                                                            builder:
+                                                                (BuildContext
+                                                                    context) {
+                                                              return AlertDialog(
+                                                                title: const Text(
+                                                                    'Image Not Available'),
+                                                                content: const Text(
+                                                                    'Sorry, the image is not available.'),
+                                                                actions: <Widget>[
+                                                                  ElevatedButton(
+                                                                    onPressed:
+                                                                        () {
+                                                                      Navigator.of(
+                                                                              context)
+                                                                          .pop();
+                                                                    },
+                                                                    child:
+                                                                        const Text(
+                                                                            'OK'),
+                                                                  ),
+                                                                ],
+                                                              );
+                                                            },
+                                                          );
+                                                        }
+                                                      },
+                                                      child: CircleAvatar(
+                                                        radius: 25,
+                                                        backgroundColor:
+                                                            Colors.transparent,
+                                                        child: dataoption[
+                                                                    'image'] !=
+                                                                null
+                                                            ? ClipOval(
+                                                                child: Image
+                                                                    .network(
+                                                                  dataoption[
+                                                                      'image'],
+                                                                  fit: BoxFit
+                                                                      .cover,
+                                                                  width: double
+                                                                      .infinity,
+                                                                  height: double
+                                                                      .infinity,
+                                                                ),
+                                                              )
+                                                            : const Icon(
+                                                                Icons.person,
+                                                                size: 40,
+                                                                color:
+                                                                    Colors.grey,
+                                                              ),
                                                       ),
-                                                      const SizedBox(width: 10),
-                                                      Expanded(
-                                                        child: Text(
-                                                          dataoption["options"],
-                                                          style:
-                                                              const TextStyle(
-                                                            color:
-                                                                Color.fromARGB(
-                                                                    255,
-                                                                    39,
-                                                                    39,
-                                                                    39),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                                Positioned(
-                                                  top: 0,
-                                                  bottom: 0,
-                                                  left: 0,
-                                                  child: Container(
-                                                    width: MediaQuery.of(
-                                                                context)
-                                                            .size
-                                                            .width *
-                                                        (dataoption[
-                                                                "votecount"] /
-                                                            100), // Width as a percentage of screen width
-                                                    decoration: BoxDecoration(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              8), // Match the container's border radius
-                                                      color:
-                                                          const Color.fromARGB(
-                                                              255,
-                                                              126,
-                                                              204,
-                                                              123),
                                                     ),
-                                                  ),
+                                                    const SizedBox(width: 10),
+                                                    Expanded(
+                                                      child: Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          Text(
+                                                            dataoption[
+                                                                "options"],
+                                                            style: TextStyle(
+                                                                color: AppColors
+                                                                    .accentColor),
+                                                          ),
+                                                          const SizedBox(
+                                                              height: 10),
+                                                          Row(
+                                                            children: [
+                                                              Expanded(
+                                                                flex: 1,
+                                                                child: SizedBox(
+                                                                  height:
+                                                                      20, // Adjust the height of the LinearProgressIndicator
+                                                                  child:
+                                                                      ClipRRect(
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            10.0), // Set border radius
+                                                                    child:
+                                                                        LinearProgressIndicator(
+                                                                      value: dataoption[
+                                                                              "votecount"] /
+                                                                          poll[
+                                                                              "voter_count"],
+                                                                      backgroundColor:
+                                                                          AppColors
+                                                                              .bgColor,
+                                                                      valueColor: AlwaysStoppedAnimation<
+                                                                              Color>(
+                                                                          AppColors
+                                                                              .accentColor),
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                              const SizedBox(
+                                                                  width: 10),
+                                                              Text(
+                                                                  "${dataoption["votecount"]}"),
+                                                            ],
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ],
                                                 ),
-                                              ],
-                                            ),
+                                              ),
+                                            ],
                                           ),
-                                          const SizedBox(width: 20),
-                                          Text("${dataoption["votecount"]}"),
-                                        ],
-                                      ));
+                                        ),
+                                      ],
+                                    ),
+                                  );
                                 })
                               ],
                             ),
