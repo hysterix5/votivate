@@ -133,7 +133,7 @@ class _AuthPageState extends State<AuthPage> {
                             width: 30.0, height: 30.0),
                         const SizedBox(width: 10.0),
                         const Text(
-                          'Login with Google',
+                          'Login',
                           style: TextStyle(
                               color: Color.fromARGB(255, 255, 255, 255),
                               fontWeight: FontWeight.bold),
